@@ -30,6 +30,15 @@ instance Num Surreal where
       right2  = [ xr*y + x*yl - xr*yl | xr <- rightSet x, yl <- leftSet y  ]
 
   negate (Surreal ls rs) = Surreal (map negate rs) (map negate ls)
-  abs x = error "Not yet implemented"
-  signum x = error "Not yet implemented"
-  fromInteger n = error "Not yet implemented"
+
+  abs x = x * signum x
+  signum x
+    | x == zero = zero
+    | x > zero  = Surreal [zero] []
+    | otherwise = Surreal [] [zero]
+    where zero = Surreal [] []
+
+  fromInteger n
+    | n == 0 = Surreal [] []
+    | n > 0 = Surreal [fromInteger (n-1)] []
+    | otherwise = Surreal [] [fromInteger (n+1)]

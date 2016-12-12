@@ -56,6 +56,27 @@ testsArithmetic = "Basic arithmetic" ~: TestList
   , _2 * (_2 + _1) == _2 * _2 + _2 * _1 ~?  "2 * (2+1) = 2*2 + 2*1"
   ]
 
+testsSign = "Signum and abs" ~: TestList
+  [ signum _m2 ~?= _m1
+  , signum _m1 ~?= _m1
+  , signum _0  ~?= _0
+  , signum _1  ~?= _1
+  , signum _2  ~?= _1
+  , abs _m2 ~?= _2
+  , abs _m1 ~?= _1
+  , abs _0  ~?= _0
+  , abs _1  ~?= _1
+  , abs _2  ~?= _2
+  ]
+
+testsFromInteger = "From integer" ~: TestList
+  [ fromInteger (-2) ~?= _m2
+  , fromInteger (-1) ~?= _m1
+  , fromInteger 0    ~?= _0
+  , fromInteger 1    ~?= _1
+  , fromInteger 2    ~?= _2
+  ]
+
 main :: IO Counts
 main = runTestTT $ TestList
   [ testsEquality
@@ -64,4 +85,6 @@ main = runTestTT $ TestList
   , testsAddition
   , testsMultiplication
   , testsArithmetic
+  , testsSign
+  , testsFromInteger
   ]
